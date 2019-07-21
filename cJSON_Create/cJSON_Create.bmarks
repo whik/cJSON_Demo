@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<BrowseTracker_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="cJSON.h" open="0" top="0" tabpos="0">
+		<Cursor position="7149" topLine="130" />
+	</File>
+	<File name="main.c" open="1" top="1" tabpos="4">
+		<Cursor position="71" topLine="0" />
+		<BrowseMarks positions="" />
+		<Book_Marks positions="" />
+	</File>
+	<File name="cJSON.c" open="0" top="0" tabpos="0">
+		<Cursor position="21436" topLine="663" />
+	</File>
+	<File name="create.h" open="0" top="0" tabpos="2">
+		<Cursor position="94" topLine="0" />
+		<BrowseMarks positions="" />
+		<Book_Marks positions="" />
+	</File>
+	<File name="create.c" open="1" top="0" tabpos="5">
+		<Cursor position="121" topLine="0" />
+		<BrowseMarks positions="" />
+		<Book_Marks positions="" />
+	</File>
+</BrowseTracker_layout_file>

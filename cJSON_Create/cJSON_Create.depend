@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1423824890 source:e:\git_project\json_lib_demo\cjson_create\cjson.c
+	<string.h>
+	<stdio.h>
+	<math.h>
+	<stdlib.h>
+	<float.h>
+	<limits.h>
+	<ctype.h>
+	"cJSON.h"
+
+1423824802 e:\git_project\json_lib_demo\cjson_create\cjson.h
+
+1563693716 source:e:\git_project\json_lib_demo\cjson_create\create.c
+	"create.h"
+	"cJSON.h"
+	"json_str.h"
+	"stdio.h"
+
+1563693337 e:\git_project\json_lib_demo\cjson_create\create.h
+	<stdlib.h>
+	<stdio.h>
+
+1563600238 e:\git_project\json_lib_demo\cjson_create\json_str.h
+
+1563693564 source:e:\git_project\json_lib_demo\cjson_create\main.c
+	"create.h"
+	"stdio.h"
+
