@@ -5,6 +5,12 @@ cJSON解析库的使用示例，包含简单和复杂JSON字符串的解析和�
 - 我的博客： [![](https://img.shields.io/badge/MyBlog-www.wangchaochao.top-orange.svg)](http://www.wangchaochao.top/)
 - 编程语言：![](https://img.shields.io/badge/language-C-brightgreen.svg?style=plastic)
 - Github仓库地址：[![](https://img.shields.io/badge/cJSON_Demo-yellow.svg?style=social&logo=github)](https://github.com/whik/cJSON_Demo)
+- Gitee仓库地址：[![](https://img.shields.io/badge/Gitee-cJSON_Demo-orange.svg)](https://gitee.com/whik/cJSON_Demo)
+
+相关博客文章：
+
+- [使用cJSON库解析和构建JSON字符串](http://www.wangchaochao.top/2019/07/21/cJSON-Demo/)
+- [JSON简介](http://www.wangchaochao.top/2018/11/18/cJSON/)
 
 #### 关于cJSON库
 
