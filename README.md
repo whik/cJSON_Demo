@@ -42,7 +42,9 @@ JSON的解析示例是在cJSON_Parse文件夹中。
 - Parse_Seniverse_Now_Json()：解析心知天气实时数据，一个数组嵌套多个对象
 - Parse_Seniverse_Forecast_Json()：解析心知预报天气，数组内嵌套一个数组和多个对象
 - Parse_Oil_Price_Json()：解析油价信息，一个数组内嵌套5个数组，每个数组包含5个字符串元素
-
+- void Parse_File_Json(void);   解析心知天气预报数据，JSON数据存放在一个文件中
+- char* textFileRead(char* filename);   读取文件内容
+- int get_file_line_number(char *filename); 获取文件总行数
 
 
 #### JSON的构建
