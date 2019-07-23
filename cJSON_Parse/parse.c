@@ -2,6 +2,7 @@
 #include "cJSON.h"
 #include "json_str.h"
 #include "stdio.h"
+#include "stdlib.h"
 
 #define LOG(fmt,args...) printf(fmt,##args)
 
@@ -294,24 +295,23 @@ void Parse_Oil_Price_Json(void)
             LOG("\n");
         }
 
-/*
-        tmp = cJSON_GetArrayItem(data, 4);  //索引信息，地区，92、95、98、0
-        str_tmp = cJSON_GetArrayItem(tmp, 0)->valuestring;   //第一个数组的 第0个元素
-        LOG("%s  ", str_tmp);
-        str_tmp = cJSON_GetArrayItem(tmp, 1)->valuestring;   //第一个数组的 第0个元素
-        LOG("%s  ", str_tmp);
-        str_tmp = cJSON_GetArrayItem(tmp, 2)->valuestring;   //第一个数组的 第0个元素
-        LOG("%s  ", str_tmp);
-        str_tmp = cJSON_GetArrayItem(tmp, 3)->valuestring;   //第一个数组的 第0个元素
-        LOG("%s  ", str_tmp);
-        str_tmp = cJSON_GetArrayItem(tmp, 4)->valuestring;   //第一个数组的 第0个元素
-        LOG("%s  ", str_tmp);
-*/
+        /*
+                tmp = cJSON_GetArrayItem(data, 4);  //索引信息，地区，92、95、98、0
+                str_tmp = cJSON_GetArrayItem(tmp, 0)->valuestring;   //第一个数组的 第0个元素
+                LOG("%s  ", str_tmp);
+                str_tmp = cJSON_GetArrayItem(tmp, 1)->valuestring;   //第一个数组的 第0个元素
+                LOG("%s  ", str_tmp);
+                str_tmp = cJSON_GetArrayItem(tmp, 2)->valuestring;   //第一个数组的 第0个元素
+                LOG("%s  ", str_tmp);
+                str_tmp = cJSON_GetArrayItem(tmp, 3)->valuestring;   //第一个数组的 第0个元素
+                LOG("%s  ", str_tmp);
+                str_tmp = cJSON_GetArrayItem(tmp, 4)->valuestring;   //第一个数组的 第0个元素
+                LOG("%s  ", str_tmp);
+        */
         str_tmp = cJSON_GetObjectItem(root, "About")->valuestring;
         LOG("\nAbout: %s\n", str_tmp);   //数据状态
         str_tmp = cJSON_GetObjectItem(root, "Home")->valuestring;
         LOG("Home: %s\n", str_tmp);   //数据状态
-
     }
     else
     {
@@ -320,10 +320,110 @@ void Parse_Oil_Price_Json(void)
     cJSON_Delete(root);
 }
 
+void Parse_File_Json(void)
+{
 
+    cJSON *root;
+    cJSON *location, *daily, *day;
+    char *str_tmp;
+    int num = 0;
+    char *filename = "weather.json";
 
+    root = cJSON_Parse(seniverse_forcast_json);
+    if(root)
+    {
+        LOG("JSON格式正确\n");
+//        LOG("JSON数据:%s \n", cJSON_Print(root));
+        /*results键*/
+        root = cJSON_GetObjectItem(root, "results");
+        root = cJSON_GetArrayItem(root, 0);
 
+        /*location键，城市信息*/
+        LOG("location键信息: \n");
+        location = cJSON_GetObjectItem(root, "location");
+        str_tmp = cJSON_GetObjectItem(location, "id")->valuestring;
+        LOG("id: %s\n", str_tmp);
+        str_tmp = cJSON_GetObjectItem(location, "name")->valuestring;
+        LOG("name: %s\n", str_tmp);
+        str_tmp = cJSON_GetObjectItem(location, "country")->valuestring;
+        LOG("country: %s\n", str_tmp);
+        str_tmp = cJSON_GetObjectItem(location, "path")->valuestring;
+        LOG("path: %s\n\n", str_tmp);
 
+        /*daily键，预报信息*/
+        LOG("daily键信息: \n");
+        daily = cJSON_GetObjectItem(root, "daily");
+        //预报3天的天气
+        for(num = 0; num <= 2; num++)
+        {
+            day = cJSON_GetArrayItem(daily, num);   //当日天气，第0个元素
+            str_tmp = cJSON_GetObjectItem(day, "date")->valuestring;    //白天天气
+            LOG("date: %s\n", str_tmp);
+            str_tmp = cJSON_GetObjectItem(day, "text_day")->valuestring;    //白天天气
+            LOG("text_day: %s\n", str_tmp);
+            str_tmp = cJSON_GetObjectItem(day, "low")->valuestring;    //白天天气
+            LOG("low: %s\n", str_tmp);
+            str_tmp = cJSON_GetObjectItem(day, "high")->valuestring;    //白天天气
+            LOG("high: %s\n", str_tmp);
+            str_tmp = cJSON_GetObjectItem(day, "wind_direction")->valuestring;    //白天天气
+            LOG("wind_direction: %s\n", str_tmp);
+            str_tmp = cJSON_GetObjectItem(day, "wind_scale")->valuestring;    //白天天气
+            LOG("wind_scale: %s\n\n", str_tmp);
+        }
+    }
+    else
+    {
+        LOG("Error before:\n[%s]\n",cJSON_GetErrorPtr());
+    }
+//    cJSON_Delete(root);
+}
 
+int get_file_line_number(char *filename)
+{
+    FILE *fp;
+    char flag;
+    int line_cnt = 1;
 
+    if((fp = fopen(filename,"r")) == NULL)  //文件打开失败
+        return -1;
+    while(!feof(fp))    //获取文件行数
+    {
+        flag = fgetc(fp);
+        if(flag == '\n')
+            line_cnt++;     //172行
+    }
+//    LOG("%d \n", line_cnt); //输出最大行数
+    if(fclose(fp) != 0) //文件关闭失败
+        return -1;
+    else
+        return line_cnt;
+}
+
+//读取文件内容
+char* textFileRead(char* filename)
+{
+    FILE *fp=NULL;
+    int flen=0;
+    char *p;
+    if ((fp=fopen(filename,"rb"))==NULL)
+    {
+//        printf("\nfile open error\n");
+        return 0;
+    }
+    fseek(fp,0L,SEEK_END);   //定位到文件末尾
+    flen=ftell(fp);          //得到文件大小
+    p=(char*)malloc(flen+1); //根据文件大小动态分配内存空间
+    if (p==NULL)
+    {
+        fclose(fp);
+        return 0;
+    }
+    fseek(fp,0L,SEEK_SET);   //定义到文件头
+    fread(p,flen,1,fp);     //一次性读取全部文件内容
+    p[flen]='\0';              //字符串结束标志
+//    printf("%s\n",p);
+    fclose(fp);
+//    free(p);
+    return p;
+}
 
